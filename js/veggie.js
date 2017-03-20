@@ -106,26 +106,41 @@ $(document).ready(function() {
 
 
     function foodList() {
-
-        var foodCode = $();
         for (var variable in food) {
-            $('ul').append('<li>' + food[variable].common_name + '</li>');
-            $('li').addClass('prime');
+            $('ul').append(
+                $('<li>' + food[variable].common_name + '</li>')
+                    .addClass('prime')
+                    .attr('id', function () {
+                        return variable;
+                    })
+            );
         }
-        for (items in food[variable]) {
-            if (items != 'id' && items != 'image'){
-                foodCode = foodCode.add('<div>'+ readable(items) +'</div>');
+
+        $('ul').on('click', 'li', function (e) {
+            var foodCode = $();
+
+            var idClick = e.currentTarget.id;
+
+            for (items in food[idClick]) {
+                if (items != 'id' && items != 'image' && items != 'nutrition') {
+                    foodCode = foodCode.add('<div>' + readable(items) + ' : ' + food[idClick][items] + '</div>');
+                }
             }
-        }
-        $('body').append(foodCode);
-        console.log(typeof items)
+
+            foodCode =  foodCode.add('<div><strong>Nutrition</strong></div>');
+            for (var nut in food[idClick].nutrition) {
+                foodCode =  foodCode.add('<div>' + readable(nut) + ' : ' + food[idClick].nutrition[nut] +  '</div>');
+
+            }
+
+            $('#placeholder').html(foodCode)
+
+        });
+        
     }
 $('button').one( 'click', foodList);
 
-
-// $('ul').on('click', 'li', function (event) {
-//     console.log($(this).text());
-// });
+    
 
 });
 
