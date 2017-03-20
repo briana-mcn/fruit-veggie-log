@@ -103,12 +103,15 @@ $(document).ready(function() {
             .join(' ');
         return word
     };
+    $('body')
+        .attr('style', 'background-color : orange')
+        .append('<button>FOOD</button>');
 
 
     function foodList() {
         for (var variable in food) {
-            $('ul').append(
-                $('<li>' + food[variable].common_name + '</li>')
+            $('body').append(
+                $('<div>' + food[variable].common_name + '</div>')
                     .addClass('prime')
                     .attr('id', function () {
                         return variable;
@@ -116,7 +119,10 @@ $(document).ready(function() {
             );
         }
 
-        $('ul').on('click', 'li', function (e) {
+        $('.prime:last').append('<div id="placeholder">dog</div>');
+
+
+        $('body').on('click', 'div', function (e) {
             var foodCode = $();
 
             var idClick = e.currentTarget.id;
@@ -130,7 +136,7 @@ $(document).ready(function() {
             foodCode =  foodCode.add('<div><strong>Nutrition</strong></div>');
             for (var nut in food[idClick].nutrition) {
                 foodCode =  foodCode.add('<div>' + readable(nut) + ' : ' + food[idClick].nutrition[nut] +  '</div>');
-
+                
             }
 
             $('#placeholder').html(foodCode)
