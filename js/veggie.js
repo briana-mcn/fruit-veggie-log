@@ -105,7 +105,7 @@ $(document).ready(function() {
     };
     $('body')
         .attr('style', 'background-color : orange')
-        .append('<button>FOOD</button>');
+        .append('<button>Veggie</button>');
 
 
     function foodList() {
@@ -119,7 +119,7 @@ $(document).ready(function() {
             );
         }
 
-        $('.prime:last').append('<div id="placeholder">dog</div>');
+        $('.prime:last').append('<div id="placeholder"></div>');
 
 
         $('body').on('click', 'div', function (e) {
@@ -136,9 +136,18 @@ $(document).ready(function() {
             foodCode =  foodCode.add('<div><strong>Nutrition</strong></div>');
             for (var nut in food[idClick].nutrition) {
                 foodCode =  foodCode.add('<div>' + readable(nut) + ' : ' + food[idClick].nutrition[nut] +  '</div>');
-                
-            }
 
+            }
+            
+            foodCode = foodCode.add($('<img>').attr({
+                src: food[idClick].image,
+                width: '100em',
+                height: '100em',
+                title: function () {
+                    return food[idClick].common_name}
+                })
+
+            );
             $('#placeholder').html(foodCode)
 
         });
@@ -146,10 +155,6 @@ $(document).ready(function() {
     }
 $('button').one( 'click', foodList);
 
-    
-
 });
-
-
 
 
